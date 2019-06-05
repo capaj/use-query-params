@@ -1,15 +1,15 @@
-import * as React from 'react';
-import { useQueryParams, StringParam, NumberParam } from 'use-query-params';
+import React from 'react'
+import { useQueryParams, StringParam, NumberParam } from 'use-query-params'
 
 const UseQueryParamsExample = () => {
-  const [count, setCount] = React.useState(0);
+  const [count, setCount] = React.useState(0)
 
   const [query, setQuery] = useQueryParams({
     zzz: NumberParam,
     test: StringParam,
-    anyp: StringParam,
-  });
-  const { zzz, test, anyp } = query;
+    anyp: StringParam
+  })
+  const { zzz, test, anyp } = query
 
   return (
     <div className="UseQueryParamsExample">
@@ -52,7 +52,7 @@ const UseQueryParamsExample = () => {
                   onClick={() =>
                     setQuery({
                       zzz: Math.floor(Math.random() * 10000),
-                      test: 'str' + Math.floor(Math.random() * 100),
+                      test: 'str' + Math.floor(Math.random() * 100)
                     })
                   }
                 >
@@ -88,7 +88,7 @@ const UseQueryParamsExample = () => {
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UseQueryParamsExample;
+export default UseQueryParamsExample

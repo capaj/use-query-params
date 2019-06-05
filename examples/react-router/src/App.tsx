@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-import UseQueryParamExample from './UseQueryParamExample';
-import ReadmeExample from './ReadmeExample';
-import ReadmeExample2 from './ReadmeExample2';
-import UseQueryParamsExample from './UseQueryParamsExample';
-import './App.css';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import UseQueryParamExample from './UseQueryParamExample'
+import ReadmeExample from './ReadmeExample'
+import ReadmeExample2 from './ReadmeExample2'
+import UseQueryParamsExample from './UseQueryParamsExample'
+import './App.css'
 
 const App = (props: any) => {
-  const [example, setExample] = React.useState(0);
+  const [example, setExample] = React.useState(0)
 
   return (
     <div className="App">
@@ -28,7 +28,7 @@ const App = (props: any) => {
         {example === 3 && <ReadmeExample2 />}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

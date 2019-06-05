@@ -1,9 +1,9 @@
 import {
   EncodedQueryWithNulls,
   updateLocation,
-  updateInLocation,
-} from 'serialize-query-params';
-import { PushReplaceHistory, UrlUpdateType } from './types';
+  updateInLocation
+} from 'serialize-query-params'
+import { PushReplaceHistory, UrlUpdateType } from './types'
 
 /**
  * Updates the URL to match the specified query changes.
@@ -19,19 +19,19 @@ export function updateUrlQuery(
 ): void {
   switch (updateType) {
     case 'replaceIn':
-      history.replace(updateInLocation(queryReplacements, location));
-      break;
+      history.replace(updateInLocation(queryReplacements, location))
+      break
     case 'pushIn':
-      history.push(updateInLocation(queryReplacements, location));
-      break;
+      history.push(updateInLocation(queryReplacements, location))
+      break
     case 'replace':
-      history.replace(updateLocation(queryReplacements, location));
-      break;
+      history.replace(updateLocation(queryReplacements, location))
+      break
     case 'push':
-      history.push(updateLocation(queryReplacements, location));
-      break;
+      history.push(updateLocation(queryReplacements, location))
+      break
     default:
   }
 }
 
-export default updateUrlQuery;
+export default updateUrlQuery

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { PushReplaceHistory } from './types';
+import React from 'react'
+import { PushReplaceHistory } from './types'
 
 /**
  * Subset of a @reach/router history object. We only
@@ -9,10 +9,10 @@ interface ReachHistory {
   navigate: (
     to: string,
     options?: {
-      state?: any;
-      replace?: boolean;
+      state?: any
+      replace?: boolean
     }
-  ) => void;
+  ) => void
 }
 
 /**
@@ -20,8 +20,8 @@ interface ReachHistory {
  * and know its current state.
  */
 export interface QueryParamContextValue {
-  history: PushReplaceHistory;
-  location: Location;
+  history: PushReplaceHistory
+  location: Location
 }
 
 /**
@@ -39,7 +39,7 @@ function adaptWindowHistory(history: History): PushReplaceHistory {
         `${location.protocol}//${location.host}${location.pathname}${
           location.search
         }`
-      );
+      )
     },
     push(location: Location) {
       history.pushState(
@@ -48,9 +48,9 @@ function adaptWindowHistory(history: History): PushReplaceHistory {
         `${location.protocol}//${location.host}${location.pathname}${
           location.search
         }`
-      );
-    },
-  };
+      )
+    }
+  }
 }
 
 /**
@@ -67,7 +67,7 @@ function adaptReachHistory(history: ReachHistory): PushReplaceHistory {
           location.search
         }`,
         { replace: true }
-      );
+      )
     },
     push(location: Location) {
       history.navigate(
@@ -75,9 +75,9 @@ function adaptReachHistory(history: ReachHistory): PushReplaceHistory {
           location.search
         }`,
         { replace: false }
-      );
-    },
-  };
+      )
+    }
+  }
 }
 
 /**
@@ -87,22 +87,22 @@ function adaptReachHistory(history: ReachHistory): PushReplaceHistory {
 function getContextValue(
   contextValue: Partial<QueryParamContextValue> = {}
 ): QueryParamContextValue {
-  const value = { ...contextValue };
+  const value = { ...contextValue }
 
-  const hasWindow = typeof window !== 'undefined';
+  const hasWindow = typeof window !== 'undefined'
   if (hasWindow) {
     if (!value.history) {
-      value.history = adaptWindowHistory(window.history);
+      value.history = adaptWindowHistory(window.history)
     }
     if (!value.location) {
-      value.location = window.location;
+      value.location = window.location
     }
   }
 
-  return value as QueryParamContextValue;
+  return value as QueryParamContextValue
 }
 
-export const QueryParamContext = React.createContext(getContextValue());
+export const QueryParamContext = React.createContext(getContextValue())
 
 /**
  * Props for the Provider component, used to hook the active routing
@@ -110,18 +110,18 @@ export const QueryParamContext = React.createContext(getContextValue());
  */
 interface Props {
   /** Main app goes here */
-  children: React.ReactNode;
+  children: React.ReactNode
   /** `Route` from react-router */
-  ReactRouterRoute?: React.ComponentClass | React.FunctionComponent;
+  ReactRouterRoute?: React.ComponentClass | React.FunctionComponent
   /** `globalHistory` from @reach/router */
-  reachHistory?: ReachHistory;
+  reachHistory?: ReachHistory
   /** Manually provided history that meets the { replace, push } interface */
-  history?: PushReplaceHistory;
+  history?: PushReplaceHistory
   /**
    * Override location object, otherwise window.location or the
    * location provided by the active routing system is used.
    */
-  location?: Location;
+  location?: Location
 }
 
 /**
@@ -133,7 +133,7 @@ export function QueryParamProvider({
   ReactRouterRoute,
   reachHistory,
   history,
-  location,
+  location
 }: Props) {
   // if we have React Router, use it to get the context value
   if (ReactRouterRoute) {
@@ -144,10 +144,10 @@ export function QueryParamProvider({
             <QueryParamContext.Provider value={getContextValue(routeProps)}>
               {children}
             </QueryParamContext.Provider>
-          );
+          )
         }}
       </ReactRouterRoute>
-    );
+    )
   }
 
   // if we are using reach router, use its history
@@ -156,12 +156,12 @@ export function QueryParamProvider({
       <QueryParamContext.Provider
         value={getContextValue({
           history: adaptReachHistory(reachHistory),
-          location,
+          location
         })}
       >
         {children}
       </QueryParamContext.Provider>
-    );
+    )
   }
 
   // neither reach nor react-router, so allow manual overrides
@@ -169,7 +169,7 @@ export function QueryParamProvider({
     <QueryParamContext.Provider value={getContextValue({ history, location })}>
       {children}
     </QueryParamContext.Provider>
-  );
+  )
 }
 
-export default QueryParamProvider;
+export default QueryParamProvider

@@ -1,15 +1,15 @@
-import * as React from 'react';
+import React from 'react'
 import {
   parse as parseQueryString,
   encodeQueryParams,
   EncodedQueryWithNulls,
   DecodedValueMap,
-  QueryParamConfigMap,
-} from 'serialize-query-params';
-import { useQueryParam } from './useQueryParam';
-import updateUrlQuery from './updateUrlQuery';
-import { QueryParamContext } from './QueryParamProvider';
-import { UrlUpdateType, SetQuery } from './types';
+  QueryParamConfigMap
+} from 'serialize-query-params'
+import { useQueryParam } from './useQueryParam'
+import updateUrlQuery from './updateUrlQuery'
+import { QueryParamContext } from './QueryParamProvider'
+import { UrlUpdateType, SetQuery } from './types'
 
 /**
  * Given a query parameter configuration (mapping query param name to { encode, decode }),
@@ -18,33 +18,33 @@ import { UrlUpdateType, SetQuery } from './types';
 export const useQueryParams = <QPCMap extends QueryParamConfigMap>(
   paramConfigMap: QPCMap
 ): [DecodedValueMap<QPCMap>, SetQuery<QPCMap>] => {
-  const { history, location } = React.useContext(QueryParamContext);
+  const { history, location } = React.useContext(QueryParamContext)
 
   // read in the raw query
   const rawQuery = React.useMemo(
     () => parseQueryString(location.search) || {},
     [location.search]
-  );
+  )
 
   // parse each parameter via useQueryParam
   // we reuse the logic to not recreate objects
-  const paramNames = Object.keys(paramConfigMap);
+  const paramNames = Object.keys(paramConfigMap)
   const paramValues = paramNames.map(
-    paramName =>
+    (paramName) =>
       useQueryParam(paramName, paramConfigMap[paramName], rawQuery)[0]
-  );
+  )
 
   // we use a memo here to prevent recreating the containing decodedValues object
   // which would break === comparisons even if no values changed.
   const decodedValues = React.useMemo(() => {
     // iterate over the decoded values and build an object
-    const decodedValues: Partial<DecodedValueMap<QPCMap>> = {};
+    const decodedValues: Partial<DecodedValueMap<QPCMap>> = {}
     for (let i = 0; i < paramNames.length; ++i) {
-      decodedValues[paramNames[i]] = paramValues[i];
+      decodedValues[paramNames[i]] = paramValues[i]
     }
 
-    return decodedValues;
-  }, paramValues);
+    return decodedValues
+  }, paramValues)
 
   // create a setter for updating multiple query params at once
   const setQuery = React.useCallback(
@@ -53,16 +53,16 @@ export const useQueryParams = <QPCMap extends QueryParamConfigMap>(
       const encodedChanges: EncodedQueryWithNulls = encodeQueryParams(
         paramConfigMap,
         changes
-      );
+      )
 
       // update the URL
-      updateUrlQuery(encodedChanges, location, history, updateType);
+      updateUrlQuery(encodedChanges, location, history, updateType)
     },
     [location]
-  );
+  )
 
   // no longer Partial
-  return [decodedValues as DecodedValueMap<QPCMap>, setQuery];
-};
+  return [decodedValues as DecodedValueMap<QPCMap>, setQuery]
+}
 
-export default useQueryParams;
+export default useQueryParams

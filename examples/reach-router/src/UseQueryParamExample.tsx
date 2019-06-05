@@ -1,28 +1,28 @@
-import * as React from 'react';
+import React from 'react'
 import {
   useQueryParam,
   StringParam,
   NumberParam,
-  ArrayParam,
-} from 'use-query-params';
+  ArrayParam
+} from 'use-query-params'
 
 const UseQueryParamExample = () => {
-  const [count, setCount] = React.useState(0);
-  const [zzz, setZzz] = useQueryParam('zzz', NumberParam);
-  const [test, setTest] = useQueryParam('test', StringParam);
-  const [anyp, setAnyP] = useQueryParam('anyp');
-  const [arr, setArr] = useQueryParam('arr', ArrayParam);
+  const [count, setCount] = React.useState(0)
+  const [zzz, setZzz] = useQueryParam('zzz', NumberParam)
+  const [test, setTest] = useQueryParam('test', StringParam)
+  const [anyp, setAnyP] = useQueryParam('anyp')
+  const [arr, setArr] = useQueryParam('arr', ArrayParam)
 
   // verify we aren't creating new arrays each time
-  const prevArr = React.useRef(arr);
+  const prevArr = React.useRef(arr)
   React.useEffect(() => {
     if (prevArr.current !== arr) {
-      console.log('new array. was:', prevArr.current, 'now:', arr);
+      console.log('new array. was:', prevArr.current, 'now:', arr)
     } else {
-      console.log('same array');
+      console.log('same array')
     }
-    prevArr.current = arr;
-  });
+    prevArr.current = arr
+  })
 
   return (
     <div className="UseQueryParamExample">
@@ -99,7 +99,7 @@ const UseQueryParamExample = () => {
                   onClick={() =>
                     setArr([
                       'arr' + Math.floor(Math.random() * 10),
-                      'arr' + Math.floor(Math.random() * 10),
+                      'arr' + Math.floor(Math.random() * 10)
                     ])
                   }
                 >
@@ -111,7 +111,7 @@ const UseQueryParamExample = () => {
         </table>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UseQueryParamExample;
+export default UseQueryParamExample

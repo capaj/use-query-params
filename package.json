@@ -1,7 +1,7 @@
 {
-  "name": "use-query-params",
+  "name": "use-url-query",
   "version": "0.3.2",
-  "description": "React Hook for managing state in URL query parameters with easy serialization.",
+  "description": "React Hook for managing state in URL query parameters",
   "main": "lib/index.js",
   "files": [
     "lib/"
@@ -9,13 +9,16 @@
   "types": "lib/index.d.ts",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "yarn build:esm && yarn build:cjs",
+    "prepare": "npm run build",
+    "build:esm": "tsc --module esnext --target esnext --outDir lib/esm",
+    "build:cjs": "tsc --module commonjs --target es5 --outDir lib/cjs",
     "build-website": "npm run test && npm run build && cd examples/website-example && npm run build && npm run copy-build",
     "dev": "NODE_ENV=development tsc -w",
     "prepublishOnly": "npm run test && npm run build",
     "test": "jest",
-    "test-watch": "jest --watch",
-    "test-coverage": "jest --coverage"
+    "jw": "jest --watch",
+    "jc": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -31,8 +34,11 @@
     "query param",
     "react use"
   ],
-  "author": "Peter Beshai <peter.beshai@gmail.com>",
-  "license": "ISC",
+  "contributors": [
+    "Peter Beshai <peter.beshai@gmail.com>",
+    "Jiri Spac <capajj@gmail.com>"
+  ],
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
@@ -42,7 +48,10 @@
     "@types/jest": "^24.0.13",
     "@types/react": "^16.8.19",
     "babel-jest": "^24.8.0",
+    "husky": "^2.3.0",
     "jest": "^24.8.0",
+    "prettier": "^1.17.1",
+    "pretty-quick": "^1.11.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-hooks-testing-library": "^0.5.1",
@@ -53,7 +62,9 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },
-  "dependencies": {
-    "serialize-query-params": "^0.1.1"
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   }
 }

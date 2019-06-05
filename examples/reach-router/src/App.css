@@ -6,7 +6,7 @@ body {
 button {
   margin: 0 0.5rem;
   font-size: 16px;
-  padding: 0.5em 1.0em;
+  padding: 0.5em 1em;
   background: #eee;
 }
 
@@ -17,4 +17,3 @@ table {
 td {
   padding: 0 1rem;
 }
-

@@ -1,11 +1,11 @@
-import * as React from 'react';
-import { Link } from 'react-router-dom';
-import UseQueryParamExample from './UseQueryParamExample';
-import UseQueryParamsExample from './UseQueryParamsExample';
-import './App.css';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import UseQueryParamExample from './UseQueryParamExample'
+import UseQueryParamsExample from './UseQueryParamsExample'
+import './App.css'
 
 const App = (props: any) => {
-  const [example, setExample] = React.useState(0);
+  const [example, setExample] = React.useState(0)
 
   return (
     <div className="App">
@@ -34,7 +34,7 @@ const App = (props: any) => {
         {example === 1 && <UseQueryParamsExample />}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App

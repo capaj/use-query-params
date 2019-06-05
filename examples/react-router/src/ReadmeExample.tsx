@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { useQueryParam, NumberParam, StringParam } from 'use-query-params';
+import React from 'react'
+import { useQueryParam, NumberParam, StringParam } from 'use-query-params'
 
 const UseQueryParamExample = () => {
   // something like: ?x=123&foo=bar in the URL
-  const [num, setNum] = useQueryParam('x', NumberParam);
-  const [foo, setFoo] = useQueryParam('foo', StringParam);
+  const [num, setNum] = useQueryParam('x', NumberParam)
+  const [foo, setFoo] = useQueryParam('foo', StringParam)
 
   return (
     <div>
@@ -15,7 +15,7 @@ const UseQueryParamExample = () => {
         Change
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default UseQueryParamExample;
+export default UseQueryParamExample

@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { globalHistory, Router } from '@reach/router';
-import App from './App';
-import { QueryParamProvider } from 'use-query-params';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { globalHistory, Router } from '@reach/router'
+import App from './App'
+import { QueryParamProvider } from 'use-query-params'
 
 ReactDOM.render(
   <QueryParamProvider reachHistory={globalHistory}>
@@ -11,4 +11,4 @@ ReactDOM.render(
     </Router>
   </QueryParamProvider>,
   document.getElementById('root')
-);
+)

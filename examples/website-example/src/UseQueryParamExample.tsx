@@ -1,36 +1,36 @@
-import * as React from 'react';
+import React from 'react'
 import {
   useQueryParam,
   StringParam,
   NumberParam,
   ArrayParam,
-  NumericArrayParam,
-} from 'use-query-params';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
-import nanoid from 'nanoid';
+  NumericArrayParam
+} from 'use-query-params'
+import SyntaxHighlighter from 'react-syntax-highlighter'
+import { atomOneLight } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import nanoid from 'nanoid'
 
 const UseQueryParamExample = () => {
-  const [foo, setFoo] = useQueryParam('foo', StringParam);
-  const [arr, setArr] = useQueryParam('arr', NumericArrayParam);
+  const [foo, setFoo] = useQueryParam('foo', StringParam)
+  const [arr, setArr] = useQueryParam('arr', NumericArrayParam)
 
   // verify we aren't creating new arrays each time
-  const prevArr = React.useRef(arr);
+  const prevArr = React.useRef(arr)
   React.useEffect(() => {
     if (prevArr.current !== arr) {
-      console.log('new array. was:', prevArr.current, 'now:', arr);
+      console.log('new array. was:', prevArr.current, 'now:', arr)
     } else {
-      console.log('same array');
+      console.log('same array')
     }
-    prevArr.current = arr;
-  });
+    prevArr.current = arr
+  })
 
-  const nextFoo = nanoid(4);
+  const nextFoo = nanoid(4)
   const nextArr = [
     Math.round(Math.random() * 100),
     Math.round(Math.random() * 100),
-    Math.round(Math.random() * 100),
-  ];
+    Math.round(Math.random() * 100)
+  ]
 
   return (
     <div className="UseQueryParamExample">
@@ -68,7 +68,7 @@ const UseQueryParamExample = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default UseQueryParamExample;
+export default UseQueryParamExample

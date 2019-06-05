@@ -1,18 +1,18 @@
-import * as React from 'react';
+import React from 'react'
 import {
   useQueryParams,
   StringParam,
   NumberParam,
-  ArrayParam,
-} from 'use-query-params';
+  ArrayParam
+} from 'use-query-params'
 
 const UseQueryParamsExample = () => {
   const [query, setQuery] = useQueryParams({
     x: NumberParam,
     q: StringParam,
-    filters: ArrayParam,
-  });
-  const { x: num, q: searchQuery, filters = [] } = query;
+    filters: ArrayParam
+  })
+  const { x: num, q: searchQuery, filters = [] } = query
 
   return (
     <div>
@@ -31,7 +31,7 @@ const UseQueryParamsExample = () => {
         Change All
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default UseQueryParamsExample;
+export default UseQueryParamsExample

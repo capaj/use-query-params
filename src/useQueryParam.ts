@@ -1,14 +1,14 @@
-import * as React from 'react';
+import React from 'react'
 import {
   parse as parseQueryString,
   stringify,
   EncodedQueryWithNulls,
   StringParam,
-  QueryParamConfig,
-} from 'serialize-query-params';
-import { QueryParamContext } from './QueryParamProvider';
-import { updateUrlQuery } from './updateUrlQuery';
-import { UrlUpdateType } from './types';
+  QueryParamConfig
+} from 'serialize-query-params'
+import { QueryParamContext } from './QueryParamProvider'
+import { updateUrlQuery } from './updateUrlQuery'
+import { UrlUpdateType } from './types'
 
 /**
  * Given a query param name and query parameter configuration ({ encode, decode })
@@ -29,25 +29,25 @@ export const useQueryParam = <D, D2 = D>(
   paramConfig: QueryParamConfig<D, D2> = StringParam as QueryParamConfig<any>,
   rawQuery?: EncodedQueryWithNulls
 ): [D2 | undefined, (newValue: D, updateType?: UrlUpdateType) => void] => {
-  const { history, location } = React.useContext(QueryParamContext);
+  const { history, location } = React.useContext(QueryParamContext)
 
   // read in the raw query
   if (!rawQuery) {
     rawQuery = React.useMemo(() => parseQueryString(location.search) || {}, [
-      location.search,
-    ]);
+      location.search
+    ])
   }
 
   // read in the encoded string value
-  const encodedValue = rawQuery[name];
+  const encodedValue = rawQuery[name]
 
   // decode if the encoded value has changed, otherwise
   // re-use memoized value
   const decodedValue = React.useMemo(() => {
     if (encodedValue == null) {
-      return undefined;
+      return undefined
     }
-    return paramConfig.decode(encodedValue);
+    return paramConfig.decode(encodedValue)
 
     // note that we use the stringified encoded value since the encoded
     // value may be an array that is recreated if a different query param
@@ -55,23 +55,18 @@ export const useQueryParam = <D, D2 = D>(
   }, [
     encodedValue instanceof Array
       ? stringify({ name: encodedValue })
-      : encodedValue,
-  ]);
+      : encodedValue
+  ])
 
   // create the setter, memoizing via useCallback
   const setValue = React.useCallback(
     (newValue: D, updateType?: UrlUpdateType) => {
-      const newEncodedValue = paramConfig.encode(newValue);
+      const newEncodedValue = paramConfig.encode(newValue)
 
-      updateUrlQuery(
-        { [name]: newEncodedValue },
-        location,
-        history,
-        updateType
-      );
+      updateUrlQuery({ [name]: newEncodedValue }, location, history, updateType)
     },
     [location]
-  );
+  )
 
-  return [decodedValue, setValue];
-};
+  return [decodedValue, setValue]
+}

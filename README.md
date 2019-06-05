@@ -4,7 +4,6 @@
   </p>
   <p>Works with <a href="https://reacttraining.com/react-router/">React Router</a> and <a href="https://reach.tech/router">Reach Router</a> out of the box. TypeScript supported.</p>
 
-
   <p>
     <a href="https://www.npmjs.com/package/use-query-params"><img alt="npm" src="https://img.shields.io/npm/v/use-query-params.svg"></a>
   <a href="https://travis-ci.com/pbeshai/use-query-params/"><img alt="Travis (.com)" src="https://img.shields.io/travis/com/pbeshai/use-query-params.svg"></a>
@@ -12,16 +11,16 @@
   </p>
 <hr />
 
-<a href="#installation">Installation</a> | 
-<a href="#usage">Usage</a> | 
-<a href="#examples">Examples</a> | 
+<a href="#installation">Installation</a> |
+<a href="#usage">Usage</a> |
+<a href="#examples">Examples</a> |
 <a href="#api">API</a> |
 <a href="https://peterbeshai.com/use-query-params/">Demo</a>
 
 </div>
 <hr/>
 
-When creating apps with easily shareable URLs, you often want to encode state as query parameters, but all query parameters must be encoded as strings. `useQueryParams` allows you to easily encode and decode data of any type as query parameters with smart memoization to prevent creating unnecessary duplicate objects. It uses [serialize-query-params](https://github.com/pbeshai/serialize-query-params).
+When creating apps with easily shareable URLs, you often want to encode state as query parameters, but all query parameters must be encoded as strings. `useQueryParams` allows you to easily encode and decode data of any type as query parameters with smart memoization to prevent creating unnecessary duplicate objects.
 
 **Not ready for hooks?** Check out [react-url-query](https://github.com/pbeshai/react-url-query) for a higher-order component (HOC) approach.
 
@@ -36,11 +35,11 @@ $ npm install --save use-query-params
 Link your routing system (e.g., [React Router example](https://github.com/pbeshai/use-query-params/blob/master/examples/react-router/src/index.tsx), [Reach Router example](https://github.com/pbeshai/use-query-params/blob/master/examples/reach-router/src/index.tsx)):
 
 ```js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { QueryParamProvider } from 'use-query-params';
-import App from './App';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { QueryParamProvider } from 'use-query-params'
+import App from './App'
 
 ReactDOM.render(
   <Router>
@@ -49,22 +48,21 @@ ReactDOM.render(
     </QueryParamProvider>
   </Router>,
   document.getElementById('root')
-);
+)
 ```
-
 
 ### Usage
 
 Add the hook to your component. There are two options: `useQueryParam`:
 
 ```js
-import * as React from 'react';
-import { useQueryParam, NumberParam, StringParam } from 'use-query-params';
+import React from 'react'
+import { useQueryParam, NumberParam, StringParam } from 'use-query-params'
 
 const UseQueryParamExample = () => {
   // something like: ?x=123&foo=bar in the URL
-  const [num, setNum] = useQueryParam('x', NumberParam);
-  const [foo, setFoo] = useQueryParam('foo', StringParam);
+  const [num, setNum] = useQueryParam('x', NumberParam)
+  const [foo, setFoo] = useQueryParam('foo', StringParam)
 
   return (
     <div>
@@ -73,31 +71,31 @@ const UseQueryParamExample = () => {
       <h1>foo is {foo}</h1>
       <button onClick={() => setFoo(`str${Math.random()}`)}>Change</button>
     </div>
-  );
-};
+  )
+}
 
-export default UseQueryParamExample;
+export default UseQueryParamExample
 ```
 
 Or `useQueryParams`:
 
 ```js
-import * as React from 'react';
+import React from 'react'
 import {
   useQueryParams,
   StringParam,
   NumberParam,
-  ArrayParam,
-} from 'use-query-params';
+  ArrayParam
+} from 'use-query-params'
 
 const UseQueryParamsExample = () => {
   // something like: ?x=123&q=foo&filters=a&filters=b&filters=c in the URL
   const [query, setQuery] = useQueryParams({
     x: NumberParam,
     q: StringParam,
-    filters: ArrayParam,
-  });
-  const { x: num, q: searchQuery, filters = [] } = query;
+    filters: ArrayParam
+  })
+  const { x: num, q: searchQuery, filters = [] } = query
 
   return (
     <div>
@@ -116,10 +114,10 @@ const UseQueryParamsExample = () => {
         Change All
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default UseQueryParamsExample;
+export default UseQueryParamsExample
 ```
 
 ### Examples
@@ -137,50 +135,46 @@ A few basic [examples](https://github.com/pbeshai/use-query-params/tree/master/e
 - [useQueryParams](#usequeryparams-1)
 - [encodeQueryParams](#encodequeryparams)
 - [QueryParamProvider](#queryparamprovider)
-- [Type Definitions](https://github.com/pbeshai/use-query-params/blob/master/src/types.ts) and from [serialize-query-params](https://github.com/pbeshai/serialize-query-params/blob/master/src/types.ts).
-- [Serialization Utility Functions](https://github.com/pbeshai/serialize-query-params/blob/master/src/serialize.ts)
-
-For convenience, use-query-params exports all of the [serialize-query-params](https://github.com/pbeshai/serialize-query-params) library. This includes most functions from [query-string](https://github.com/sindresorhus/query-string), which is used internally.
 
 #### UrlUpdateType
 
 The `UrlUpdateType` is a string type definings the different methods for updating the URL:
 
- - `'replaceIn'`: Replace just a single parameter, leaving the rest as is
- - `'replace'`: Replace all parameters with just those specified
- - `'pushIn'`: Push just a single parameter, leaving the rest as is (back button works)
- - `'push'`: Push all parameters with just those specified (back button works)
-
+- `'replaceIn'`: Replace just a single parameter, leaving the rest as is
+- `'replace'`: Replace all parameters with just those specified
+- `'pushIn'`: Push just a single parameter, leaving the rest as is (back button works)
+- `'push'`: Push all parameters with just those specified (back button works)
 
 #### Param Types
-See [all param definitions from serialize-query-params here](https://github.com/pbeshai/serialize-query-params/blob/master/src/params.ts). You can define your own parameter types by creating an object with an `encode` and a `decode` function. See the existing definitions for examples.
+
+You can define your own parameter types by creating an object with an `encode` and a `decode` function. See the existing definitions for examples.
 
 Note that all nully values will encode and decode as `undefined`.
 
 Examples in this table assume query parameter named `qp`.
 
-| Param | Type | Example Decoded | Example Encoded |
-| --- | --- | --- | --- |
-| StringParam | string | `'foo'` | `?qp=foo` |
-| NumberParam | number | `123` | `?qp=123` |
-| ObjectParam | { key: string } | `{ foo: 'bar', baz: 'zzz' }` | `?qp=foo-bar_baz-zzz` |
-| ArrayParam | string[] | `['a','b','c']` | `?qp=a&qp=b&qp=c` |
-| JsonParam | any | `{ foo: 'bar' }` | `?qp=%7B%22foo%22%3A%22bar%22%7D` |
-| DateParam | Date | `Date(2019, 2, 1)` | `?qp=2019-03-01` |
-| BooleanParam | boolean | `true` | `?qp=1` |
-| NumericObjectParam | { key: number } | `{ foo: 1, bar: 2 }` | `?qp=foo-1_bar-2` |
-| DelimitedArrayParam | string[] | `['a','b','c']` | `?qp=a_b_c'` |
-| DelimitedNumericArrayParam | number[] | `[1, 2, 3]` | `?qp=1_2_3'` |
+| Param                      | Type            | Example Decoded              | Example Encoded                   |
+| -------------------------- | --------------- | ---------------------------- | --------------------------------- |
+| String                     | string          | `'foo'`                      | `?qp=foo`                         |
+| Number                     | number          | `123`                        | `?qp=123`                         |
+| Object                     | { key: string } | `{ foo: 'bar', baz: 'zzz' }` | `?qp=foo-bar_baz-zzz`             |
+| Array                      | string[]        | `['a','b','c']`              | `?qp=a&qp=b&qp=c`                 |
+| JSON                       | any             | `{ foo: 'bar' }`             | `?qp=%7B%22foo%22%3A%22bar%22%7D` |
+| Date                       | Date            | `Date(2019, 2, 1)`           | `?qp=2019-03-01`                  |
+| Boolean                    | boolean         | `true`                       | `?qp=1`                           |
+| NumericObjectParam         | { key: number } | `{ foo: 1, bar: 2 }`         | `?qp=foo-1_bar-2`                 |
+| DelimitedArrayParam        | string[]        | `['a','b','c']`              | `?qp=a_b_c'`                      |
+| DelimitedNumericArrayParam | number[]        | `[1, 2, 3]`                  | `?qp=1_2_3'`                      |
 
 **Example**
 
 ```js
-import { ArrayParam, useQueryParam, useQueryParams } from 'use-query-params';
+import { ArrayParam, useQueryParam, useQueryParams } from 'use-query-params'
 
 // typically used with the hooks:
-const [foo, setFoo] = useQueryParam('foo', ArrayParam);
+const [foo, setFoo] = useQueryParam('foo', ArrayParam)
 // - OR -
-const [query, setQuery] = useQueryParams({ foo: ArrayParam });
+const [query, setQuery] = useQueryParams({ foo: ArrayParam })
 ```
 
 **Example with Custom Param**
@@ -188,23 +182,19 @@ const [query, setQuery] = useQueryParams({ foo: ArrayParam });
 You can define your own params if the ones shipped with this package don't work for you. There are included [serialization utility functions](https://github.com/pbeshai/use-query-params/blob/master/src/serialize.ts) to make this easier, but you can use whatever you like.
 
 ```js
-import {
-  encodeDelimitedArray,
-  decodeDelimitedArray
-} from 'use-query-params';
+import { encodeDelimitedArray, decodeDelimitedArray } from 'use-query-params'
 
 /** Uses a comma to delimit entries. e.g. ['a', 'b'] => qp?=a,b */
 const CommaArrayParam = {
-  encode: (array: string[] | null | undefined) => 
+  encode: (array: string[] | null | undefined) =>
     encodeDelimitedArray(array, ','),
 
-  decode: (arrayStr: string | string[] | null | undefined) => 
+  decode: (arrayStr: string | string[] | null | undefined) =>
     decodeDelimitedArray(arrayStr, ',')
-};
+}
 ```
 
 <br/>
-
 
 #### useQueryParam
 
@@ -226,12 +216,12 @@ from the location available in the QueryParamContext.
 **Example**
 
 ```js
-import { useQueryParam, NumberParam } from 'use-query-params';
+import { useQueryParam, NumberParam } from 'use-query-params'
 
 // reads query parameter `foo` from the URL and stores its decoded numeric value
-const [foo, setFoo] = useQueryParam('foo', NumberParam);
-setFoo(500);
-setFoo(123, 'push');
+const [foo, setFoo] = useQueryParam('foo', NumberParam)
+setFoo(500)
+setFoo(123, 'push')
 ```
 
 <br/>
@@ -253,12 +243,15 @@ is one of `'replace' | 'replaceIn' | 'push' | 'pushIn'`, defaulting to
 **Example**
 
 ```js
-import { useQueryParams, StringParam, NumberParam } from 'use-query-params';
+import { useQueryParams, StringParam, NumberParam } from 'use-query-params'
 
 // reads query parameters `foo` and `bar` from the URL and stores their decoded values
-const [query, setQuery] = useQueryParams({ foo: NumberParam, bar: StringParam });
+const [query, setQuery] = useQueryParams({
+  foo: NumberParam,
+  bar: StringParam
+})
 setQuery({ foo: 500 })
-setQuery({ foo: 123, bar: 'zzz' }, 'push');
+setQuery({ foo: 123, bar: 'zzz' }, 'push')
 ```
 
 **Example with Custom Parameter Type**
@@ -303,11 +296,11 @@ query parameters.
 **Example**
 
 ```js
-import { encodeQueryParams, NumberParam, stringify } from 'use-query-params';
+import { encodeQueryParams, NumberParam, stringify } from 'use-query-params'
 
 // encode each parameter according to the configuration
-const encodedQuery = encodeQueryParams({ foo: NumberParam }, { foo });
-const link = `/?${stringify(encodedQuery)}`;
+const encodedQuery = encodeQueryParams({ foo: NumberParam }, { foo })
+const link = `/?${stringify(encodedQuery)}`
 ```
 
 <br/>
@@ -332,15 +325,14 @@ See the tests or these examples for how to use it:
 - [React Router Example](https://github.com/pbeshai/use-query-params/tree/master/examples/react-router)
 - [Reach Router Example](https://github.com/pbeshai/use-query-params/tree/master/examples/reach-router)
 
-
 **Example (Reach Router)**
 
 ```js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { globalHistory, Router } from '@reach/router';
-import { QueryParamProvider } from 'use-query-params';
-import App from './App';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { globalHistory, Router } from '@reach/router'
+import { QueryParamProvider } from 'use-query-params'
+import App from './App'
 
 ReactDOM.render(
   <QueryParamProvider reachHistory={globalHistory}>
@@ -349,7 +341,7 @@ ReactDOM.render(
     </Router>
   </QueryParamProvider>,
   document.getElementById('root')
-);
+)
 ```
 
 <br/>
@@ -361,7 +353,6 @@ Run the typescript compiler in watch mode:
 ```
 npm run dev
 ```
-
 
 You can run an example app:
 
